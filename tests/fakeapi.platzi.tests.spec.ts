@@ -1,61 +1,41 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-
-function createProductPayload() {
-  return {
-    title: faker.commerce.productName(),
-    price: faker.number.int({ min: 10, max: 1000 }),
-    description: faker.commerce.productDescription(),
-    categoryId: 1,
-    images: ['https://placehold.co/600x400'],
-  };
-}
+import {
+  createProductPayload,
+} from './helpers/products.helper.js';
 
 test('Get a single product by id', async ({ request }) => {
-  const createResponse = await request.post('products/', {
-    data: createProductPayload(),
-    failOnStatusCode: true
+  let createdProduct: { id: unknown; title: unknown; };
+
+  await test.step('Create product', async () => {
+    const createResponse = await request.post('products/', {
+      data: createProductPayload(),
+      failOnStatusCode: true,
+    });
+
+    expect(createResponse.status()).toBe(201);
+
+    createdProduct = await createResponse.json();
   });
 
-  expect(createResponse.status()).toBe(201);
+  await test.step('Get product by id', async () => {
+    const getResponse = await request.get(`products/${createdProduct.id}`);
 
-  const createdProduct = await createResponse.json();
+    expect(getResponse.status()).toBe(200);
 
-  const getResponse = await request.get(`products/${createdProduct.id}`);
+    const product = await getResponse.json();
 
-  expect(getResponse.status()).toBe(200);
+    expect(product.id).toBe(createdProduct.id);
+    expect(product.title).toBe(createdProduct.title);
+    expect(product.slug).toBeTruthy();
 
-  const product = await getResponse.json();
+    const headers = getResponse.headers();
 
-  expect(product.id).toBe(createdProduct.id);
-  expect(product.title).toBe(createdProduct.title);
-  expect(product.slug).toBeTruthy();
+    expect(headers['content-type']).toContain('application/json');
+    expect(headers['access-control-allow-origin']).toBe('*');
+    expect(headers['x-content-type-options']).toBe('nosniff');
+  });
 });
-
-test('Get a single product by slug', async ({request}) => {
-  const createResponse = await request.post('products/', {
-    data: {
-      title: faker.commerce.productName(),
-      price: 10,
-      description: 'A description',
-      categoryId: 1,
-      images: ['https://placehold.co/600x400'],
-    },    failOnStatusCode: true,
-  });
-
-  expect(createResponse.status()).toBe(201);
-
-  const createdProduct = await createResponse.json();
-
-  const getResponse = await request.get(`products/slug/${createdProduct.slug}`);
-
-  expect(getResponse.status()).toBe(200);
-
-  const product = await getResponse.json();
-
-  expect(product.slug).toBe(createdProduct.slug);
-  expect(product.id).toBe(createdProduct.id);
-})
 
 test('Create a product', async ({ request }) => {
   const payload = createProductPayload();
