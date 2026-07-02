@@ -7,7 +7,7 @@ import {
 } from './helpers/products.helper.js';
 import { tags } from './helpers/tags.js';
 
-let createdProduct;
+let createdProduct: any;
 
 
 test.describe('Products API tests', () => {
@@ -103,7 +103,7 @@ test.describe('Products API tests', () => {
 });
 
   test(`Pagination returns different products for different offsets ${tags.pagination}`, async ({ request }) => {
-  let firstPageResponse;
+  let firstPageResponse: any;
   let secondPageResponse;
 
   await test.step('Pagination returns 10 products', async () => {
