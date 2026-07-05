@@ -26,5 +26,12 @@ export default defineConfig({
         baseURL: 'https://newsapi.org/v2/',
       },
     },
+    {
+      name: 'conduit',
+      testDir: './tests/conduit',
+      use: {
+        baseURL: 'https://conduit-api.learnwebdriverio.com/api/',
+      },
+    },
   ],
 });
