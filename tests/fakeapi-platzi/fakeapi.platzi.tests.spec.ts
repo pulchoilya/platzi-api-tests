@@ -1,11 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import {
-  createProductPayload,
-} from './helpers/products.helper.js';
+import { createProductPayload } from './helpers/products.helper.js';
 
 test('Get a single product by id', async ({ request }) => {
-  let createdProduct: { id: unknown; title: unknown; };
+  let createdProduct: { id: number; title: string };
 
   await test.step('Create product', async () => {
     const createResponse = await request.post('products/', {
@@ -68,9 +66,7 @@ test('Update a product', async ({ request }) => {
   const createdProduct = await createResponse.json();
 
   const newTitle = faker.commerce.productName();
-  const responsePut = await request.put(
-  `products/${createdProduct.id}`,
-  {
+  const responsePut = await request.put(`products/${createdProduct.id}`, {
     data: {
       title: newTitle,
       slug: newTitle.toLowerCase().replace(/\s+/g, '-'),
@@ -80,8 +76,7 @@ test('Update a product', async ({ request }) => {
       images: createdProduct.images,
     },
     failOnStatusCode: true,
-  }
-);
+  });
   expect(responsePut.status()).toBe(200);
 });
 
@@ -175,9 +170,7 @@ test('Get products related by slug', async ({ request }) => {
 
   const createdProduct = await createResponse.json();
 
-  const relatedResponse = await request.get(
-    `products/slug/${createdProduct.slug}/related`
-  );
+  const relatedResponse = await request.get(`products/slug/${createdProduct.slug}/related`);
 
   expect(relatedResponse.status()).toBe(200);
 
@@ -185,4 +178,3 @@ test('Get products related by slug', async ({ request }) => {
 
   expect(Array.isArray(relatedProducts)).toBeTruthy();
 });
-

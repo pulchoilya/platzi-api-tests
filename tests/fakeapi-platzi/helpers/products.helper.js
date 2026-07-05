@@ -12,7 +12,6 @@ export function createProductPayload() {
 }
 
 export async function createProduct(request) {
-  
   const payload = createProductPayload();
 
   const response = await request.post('products/', {

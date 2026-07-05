@@ -97,15 +97,15 @@ npx playwright test --grep "Get a single product by id"
 
 ## Available Tags
 
-| Tag           | Value         | Purpose                          |
-|---------------|---------------|----------------------------------|
-| `smoke`       | `@smoke`      | Critical path — run on every CI  |
-| `regression`  | `@regression` | Full regression sweep            |
-| `products`    | `@products`   | All product endpoint tests       |
-| `pagination`  | `@pagination` | Pagination / offset-limit tests  |
-| `create`      | `@create`     | Product creation tests           |
-| `update`      | `@update`     | Product update (PUT) tests       |
-| `delete`      | `@delete`     | Product deletion tests           |
+| Tag          | Value         | Purpose                         |
+| ------------ | ------------- | ------------------------------- |
+| `smoke`      | `@smoke`      | Critical path — run on every CI |
+| `regression` | `@regression` | Full regression sweep           |
+| `products`   | `@products`   | All product endpoint tests      |
+| `pagination` | `@pagination` | Pagination / offset-limit tests |
+| `create`     | `@create`     | Product creation tests          |
+| `update`     | `@update`     | Product update (PUT) tests      |
+| `delete`     | `@delete`     | Product deletion tests          |
 
 ---
 
@@ -115,19 +115,20 @@ npx playwright test --grep "Get a single product by id"
 
 Uses `beforeEach` to create a product and `afterEach` to clean it up.
 
-| Test | Tags |
-|------|------|
-| Get a single product by id | `@smoke @products` |
-| Get a single product by slug | `@smoke @products` |
-| Update a product | `@smoke @update` |
-| Pagination returns 10 products | `@pagination` |
-| Pagination returns different products for different offsets | `@pagination` |
-| Get products related by id | `@smoke @products` |
-| Get products related by slug | `@smoke @products` |
-| Create a product | `@smoke @products` |
-| Delete a product | `@smoke @delete` |
+| Test                                                        | Tags               |
+| ----------------------------------------------------------- | ------------------ |
+| Get a single product by id                                  | `@smoke @products` |
+| Get a single product by slug                                | `@smoke @products` |
+| Update a product                                            | `@smoke @update`   |
+| Pagination returns 10 products                              | `@pagination`      |
+| Pagination returns different products for different offsets | `@pagination`      |
+| Get products related by id                                  | `@smoke @products` |
+| Get products related by slug                                | `@smoke @products` |
+| Create a product                                            | `@smoke @products` |
+| Delete a product                                            | `@smoke @delete`   |
 
 Also includes an **Annotations examples** describe block that demonstrates:
+
 - `test.skip` — temporarily disabled test
 - `test.fixme` — known broken test
 - `test.fail` — expected-to-fail assertion
@@ -137,16 +138,16 @@ Also includes an **Annotations examples** describe block that demonstrates:
 
 No shared setup. Each test is fully self-contained.
 
-| Test |
-|------|
-| Get a single product by id |
-| Create a product |
-| Update a product |
-| Delete a product |
-| Pagination returns 10 products |
+| Test                                                        |
+| ----------------------------------------------------------- |
+| Get a single product by id                                  |
+| Create a product                                            |
+| Update a product                                            |
+| Delete a product                                            |
+| Pagination returns 10 products                              |
 | Pagination returns different products for different offsets |
-| Get products related by id |
-| Get products related by slug |
+| Get products related by id                                  |
+| Get products related by slug                                |
 
 ---
 
@@ -168,13 +169,13 @@ npx playwright show-trace <path-to-trace.zip>
 
 ## Configuration
 
-| Setting | Value |
-|---------|-------|
-| Base URL | `https://api.escuelajs.co/api/v1/` |
-| Parallel execution | Enabled (`fullyParallel: true`) |
-| Reporter | HTML |
-| Trace | On first retry |
-| Project name | `fakeapi.platzi` |
+| Setting            | Value                              |
+| ------------------ | ---------------------------------- |
+| Base URL           | `https://api.escuelajs.co/api/v1/` |
+| Parallel execution | Enabled (`fullyParallel: true`)    |
+| Reporter           | HTML                               |
+| Trace              | On first retry                     |
+| Project name       | `fakeapi.platzi`                   |
 
 To change the base URL, edit `playwright.config.ts`:
 
@@ -188,8 +189,8 @@ use: {
 
 ## Dependencies
 
-| Package | Role |
-|---------|------|
+| Package            | Role                                 |
+| ------------------ | ------------------------------------ |
 | `@playwright/test` | Test runner and API request fixtures |
-| `@faker-js/faker` | Random test data generation |
-| `@types/node` | TypeScript Node.js types (dev) |
+| `@faker-js/faker`  | Random test data generation          |
+| `@types/node`      | TypeScript Node.js types (dev)       |

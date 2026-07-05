@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
@@ -14,7 +14,17 @@ export default defineConfig({
   projects: [
     {
       name: 'fakeapi.platzi',
+      testDir: './tests/fakeapi-platzi',
+      use: {
+        baseURL: 'https://api.escuelajs.co/api/v1/',
+      },
+    },
+    {
+      name: 'newsapi',
+      testDir: './tests/newsapi',
+      use: {
+        baseURL: 'https://newsapi.org/v2/',
+      },
     },
   ],
 });
-
