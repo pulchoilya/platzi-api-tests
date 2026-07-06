@@ -4,8 +4,8 @@ import { newsTestData } from './data/news.data';
 import { searchNewsResponseSchema } from '../../app/json-schemas/News';
 
 for (const { id, q, from, sortBy } of newsTestData) {
-  test(`${id}. Search "${q}" news`, async ({ newsRequest }) => {
-    const response = await newsRequest.get('everything', {
+  test(`${id}. Search "${q}" news`, async ({ request }) => {
+    const response = await request.get('everything', {
       params: {
         q,
         from,

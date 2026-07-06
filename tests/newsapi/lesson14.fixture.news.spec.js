@@ -3,10 +3,10 @@ import { expect } from '@playwright/test';
 import { newsTestData, invalidNewsTestData } from './data/news.data';
 import { searchNewsResponseSchema, errorResponseSchema } from '../../app/json-schemas/News';
 
-test('Search Apple news Two Days Ago', async ({ newsRequest }) => {
+test('Search Apple news Two Days Ago', async ({ request }) => {
   const data = newsTestData[0];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -39,10 +39,10 @@ test('Search Apple news Two Days Ago', async ({ newsRequest }) => {
   expect(typeof firstArticle.source).toBe('object');
 });
 
-test('Search Apple news', async ({ newsRequest }) => {
+test('Search Apple news', async ({ request }) => {
   const data = newsTestData[1];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -64,10 +64,10 @@ test('Search Apple news', async ({ newsRequest }) => {
   expect(body.articles.length).toBeGreaterThan(0);
 });
 
-test('Tesla news for yesterday', async ({ newsRequest }) => {
+test('Tesla news for yesterday', async ({ request }) => {
   const data = newsTestData[2];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -89,10 +89,10 @@ test('Tesla news for yesterday', async ({ newsRequest }) => {
   expect(body.articles.length).toBeGreaterThan(0);
 });
 
-test('AI news for yesterday', async ({ newsRequest }) => {
+test('AI news for yesterday', async ({ request }) => {
   const data = newsTestData[3];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -114,10 +114,10 @@ test('AI news for yesterday', async ({ newsRequest }) => {
   expect(body.articles.length).toBeGreaterThan(0);
 });
 
-test('Google news for two days ago', async ({ newsRequest }) => {
+test('Google news for two days ago', async ({ request }) => {
   const data = newsTestData[4];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -139,10 +139,10 @@ test('Google news for two days ago', async ({ newsRequest }) => {
   expect(body.articles.length).toBeGreaterThan(0);
 });
 
-test('Amazon news for yesterday', async ({ newsRequest }) => {
+test('Amazon news for yesterday', async ({ request }) => {
   const data = newsTestData[5];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -164,10 +164,10 @@ test('Amazon news for yesterday', async ({ newsRequest }) => {
   expect(body.articles.length).toBeGreaterThan(0);
 });
 
-test('Nvidia news for yesterday', async ({ newsRequest }) => {
+test('Nvidia news for yesterday', async ({ request }) => {
   const data = newsTestData[6];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -189,10 +189,10 @@ test('Nvidia news for yesterday', async ({ newsRequest }) => {
   expect(body.articles.length).toBeGreaterThan(0);
 });
 
-test('Search Microsoft news', async ({ newsRequest }) => {
+test('Search Microsoft news', async ({ request }) => {
   const data = newsTestData[7];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -214,10 +214,10 @@ test('Search Microsoft news', async ({ newsRequest }) => {
   expect(Array.isArray(body.articles)).toBe(true);
 });
 
-test('Bitcoin news for yesterday', async ({ newsRequest }) => {
+test('Bitcoin news for yesterday', async ({ request }) => {
   const data = newsTestData[8];
 
-  const response = await newsRequest.get('everything', {
+  const response = await request.get('everything', {
     params: {
       q: data.q,
       from: data.from,
@@ -239,8 +239,8 @@ test('Bitcoin news for yesterday', async ({ newsRequest }) => {
   expect(body.articles.length).toBeGreaterThan(0);
 });
 
-test('Missing q should return error', async ({ newsRequest }) => {
-  const response = await newsRequest.get('everything', {
+test('Missing q should return error', async ({ request }) => {
+  const response = await request.get('everything', {
     params: {
       q: invalidNewsTestData.q,
       from: invalidNewsTestData.from,
@@ -262,3 +262,4 @@ test('Missing q should return error', async ({ newsRequest }) => {
   expect(body.code).toBeTruthy();
   expect(body.message).toBeTruthy();
 });
+

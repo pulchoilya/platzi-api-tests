@@ -1,11 +1,11 @@
 import { test as base, request as APIRequest, APIRequestContext } from '@playwright/test';
 
 type MyFixtures = {
-  newsRequest: APIRequestContext;
+  request: APIRequestContext;
 };
 
 export const test = base.extend<MyFixtures>({
-  newsRequest: async ({}, use) => {
+  request: async ({}, use) => {
     const apiRequest = await APIRequest.newContext({
       baseURL: 'https://newsapi.org/v2/',
       extraHTTPHeaders: {

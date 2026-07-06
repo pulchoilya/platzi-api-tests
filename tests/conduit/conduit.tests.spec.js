@@ -2,13 +2,13 @@ import { test } from './helpers/fixtures';
 import { expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
-test('update user', async ({ newsRequest }) => {
+test('update user', async ({ request }) => {
   const updatedUser = {
     bio: faker.lorem.sentence(),
     image: faker.image.avatar(),
   };
 
-  const response = await newsRequest.put('user', {
+  const response = await request.put('user', {
     data: {
       user: updatedUser,
     },
@@ -25,8 +25,8 @@ test('update user', async ({ newsRequest }) => {
 });
 
 
-test('add articles', async ({ newsRequest }) => {
-  const response = await newsRequest.post('articles', {
+test('add articles', async ({ request }) => {
+  const response = await request.post('articles', {
     data: {
       article: {
         title: 'Test Art1',

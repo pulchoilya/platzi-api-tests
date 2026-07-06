@@ -43,11 +43,11 @@ async function login(user: any) {
 }
 
 type MyFixtures = {
-  newsRequest: APIRequestContext;
+  request: APIRequestContext;
 };
 
 export const test = base.extend<MyFixtures>({
-  newsRequest: async ({}, use) => {
+  request: async ({}, use) => {
     const user = await signUp();
     const token = await login(user);
 
