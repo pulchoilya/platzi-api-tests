@@ -8,7 +8,7 @@ async function signUp() {
 
   const user = {
   email: faker.internet.email().toLowerCase(),
-  password: 'qwer1234',
+  password: process.env.CONDUIT_PASSWORD,
   username: `amigo${faker.string.alpha(10).toLowerCase()}`,
 };
 
