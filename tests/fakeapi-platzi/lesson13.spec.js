@@ -4,7 +4,7 @@ import {
   getUsersSchema,
   createUserResponseSchema,
   emailAvailabilitySchema,
-} from '../../app/json-schemas/Users';
+} from '../../apps/json-schemas/Users';
 import { createUser, userData } from './helpers/users.helper.js';
 
 test('GET users list', { tag: ['@users', '@smoke'] }, async ({ request }) => {

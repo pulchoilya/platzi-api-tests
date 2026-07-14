@@ -4,7 +4,7 @@ import {
   getUsersSchema,
   createUserResponseSchema,
   emailAvailabilitySchema,
-} from '../../app/json-schemas/Users';
+} from '../../apps/json-schemas/Users';
 import { createUser, userData } from './helpers/users.helper.js';
 import { expectStandardHeaders, expectValidSchema } from './helpers/assertions.helper.js';
 

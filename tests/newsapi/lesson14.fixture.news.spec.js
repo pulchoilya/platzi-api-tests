@@ -1,7 +1,7 @@
 import { test } from './helpers/fixtures';
 import { expect } from '@playwright/test';
 import { newsTestData, invalidNewsTestData } from './data/news.data';
-import { searchNewsResponseSchema, errorResponseSchema } from '../../app/json-schemas/News';
+import { searchNewsResponseSchema, errorResponseSchema } from '../../apps/json-schemas/News';
 
 test('Search Apple news Two Days Ago', async ({ request }) => {
   const data = newsTestData[0];

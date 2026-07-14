@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from './helpers/fixtures';
 import { newsTestData } from './data/news.data';
-import { searchNewsResponseSchema } from '../../app/json-schemas/News';
+import { searchNewsResponseSchema } from '../../apps/json-schemas/News';
 
 for (const { id, q, from, sortBy } of newsTestData) {
   test(`${id}. Search "${q}" news`, async ({ request }) => {

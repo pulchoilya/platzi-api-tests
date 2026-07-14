@@ -1,4 +1,8 @@
-import { test as base, request as APIRequest, APIRequestContext, expect } from '@playwright/test';
+import {
+  test as base,
+  request as APIRequest,
+  APIRequestContext,
+} from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
 async function signUp() {
@@ -7,20 +11,26 @@ async function signUp() {
   });
 
   const user = {
-  email: faker.internet.email().toLowerCase(),
-  password: process.env.CONDUIT_PASSWORD,
-  username: `amigo${faker.string.alpha(10).toLowerCase()}`,
-};
+    email: faker.internet.email().toLowerCase(),
+    password: process.env.CONDUIT_PASSWORD,
+    username: `amigo${faker.string.alpha(10).toLowerCase()}`,
+  };
 
   await apiRequest.post('users', {
     data: { user },
     failOnStatusCode: true,
   });
-  console.log(user);
+
+  await apiRequest.dispose();
+
   return user;
 }
 
-async function login(user: any) {
+async function login(user: {
+  email: string;
+  password: string;
+  username: string;
+}) {
   const apiRequest = await APIRequest.newContext({
     baseURL: 'https://conduit-api.learnwebdriverio.com/api/',
   });
@@ -36,28 +46,41 @@ async function login(user: any) {
   });
 
   const json = await response.json();
-  const token = json.user.token;
 
-  expect(token).toBeDefined();
-  return token;
+  await apiRequest.dispose();
+
+  return json.user.token;
 }
 
 type MyFixtures = {
   request: APIRequestContext;
+  isAuthorized: boolean;
 };
 
 export const test = base.extend<MyFixtures>({
-  request: async ({}, use) => {
-    const user = await signUp();
-    const token = await login(user);
+  isAuthorized: [true, { option: true }],
+
+  request: async ({ isAuthorized }, use) => {
+    let token: string | undefined;
+
+    if (isAuthorized) {
+      const user = await signUp();
+      token = await login(user);
+    }
 
     const apiRequest = await APIRequest.newContext({
       baseURL: 'https://conduit-api.learnwebdriverio.com/api/',
-      extraHTTPHeaders: {
-        Authorization: `Token ${token}`,
-      },
+      extraHTTPHeaders: token
+        ? {
+            Authorization: `Token ${token}`,
+          }
+        : {},
     });
 
     await use(apiRequest);
+
+    await apiRequest.dispose();
   },
 });
+
+export { expect } from '@playwright/test';
