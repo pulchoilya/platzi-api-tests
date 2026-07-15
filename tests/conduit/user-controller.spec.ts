@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { UserController } from '../../app/Controllers/UserController';
+import { LegacyUserController } from '../../apps/conduit/Controllers/LegacyUserController';
 
 test('working with UserController', async ({ request }) => {
-  const userController = new UserController(request);
+  const userController = new LegacyUserController(request);
 
   const user = {
     email: faker.internet.email().toLowerCase(),

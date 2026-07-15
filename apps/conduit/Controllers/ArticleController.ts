@@ -1,12 +1,8 @@
-import { BaseController } from "./BaseController";
-
+import { BaseController } from './BaseController';
 
 export class ArticleController extends BaseController {
-
- // property або властивість
   articlesEndpoint = '/api/articles';
 
-  // метод або method
   async getArticles(
     params?: {
       offset?: number;
@@ -15,11 +11,15 @@ export class ArticleController extends BaseController {
       author?: string;
       favorited?: string;
     },
-    options?: { failOnStatusCode?: boolean | undefined },
+    options?: {
+      failOnStatusCode?: boolean;
+      timeout?: number;
+    },
   ) {
     const response = await this.request.get(this.articlesEndpoint, {
-      params: params,
+      params,
       failOnStatusCode: options?.failOnStatusCode,
+      timeout: options?.timeout,
     });
 
     return response;
@@ -30,28 +30,20 @@ export class ArticleController extends BaseController {
       title?: string;
       description?: string;
       body?: string;
-      tagList: Array<string>;
+      tagList: string[];
     },
     options?: {
       failOnStatusCode?: boolean;
       timeout?: number;
-      isCleanup?: boolean;
     },
   ) {
-    const response = await this.request.post('/api/articles', {
+    const response = await this.request.post(this.articlesEndpoint, {
       data: {
-        article: article,
+        article,
       },
       failOnStatusCode: options?.failOnStatusCode,
       timeout: options?.timeout,
     });
-
-    if (options?.isCleanup) {
-      const json = await response.json();
-      const slug = json['slug'];
-
-      // cleanupQueue.push(slug)
-    }
 
     return response;
   }

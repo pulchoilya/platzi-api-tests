@@ -1,47 +1,66 @@
 import { BaseController } from './BaseController';
 
-export class ArticleController extends BaseController {
-  articlesEndpoint = '/api/articles';
+export class UserController extends BaseController {
+  userEndpoint = '/api/user';
+  usersEndpoint = '/api/users';
 
-  async getArticles(
-    params?: {
-      offset?: number;
-      limit?: number;
-      tag?: string;
-      author?: string;
-      favorited?: string;
-    },
+  async getCurrentUser(
     options?: {
       failOnStatusCode?: boolean;
+      timeout?: number;
     },
-  ){
-    const response = await this.request.get(this.articlesEndpoint, {
-      params,
+  ) {
+    const response = await this.request.get(this.userEndpoint, {
       failOnStatusCode: options?.failOnStatusCode,
+      timeout: options?.timeout,
     });
+
     return response;
   }
 
-  async createArticle(
-    article: {
-      title?: string;
-      description?: string;
-      body?: string;
-      tagList: string[];
+  async updateUser(
+    user: {
+      email?: string;
+      username?: string;
+      bio?: string;
+      image?: string;
+      password?: string;
     },
     options?: {
       failOnStatusCode?: boolean;
       timeout?: number;
-      isCleanup?: boolean;
     },
-  ){
-    const response = await this.request.post(this.articlesEndpoint, {
+  ) {
+    const response = await this.request.put(this.userEndpoint, {
       data: {
-        article,
+        user,
       },
       failOnStatusCode: options?.failOnStatusCode,
       timeout: options?.timeout,
-    }); 
+    });
+
     return response;
   }
-};
+
+  async createUser(
+    user: {
+      email: string;
+      password: string;
+      username: string;
+    },
+    options?: {
+      failOnStatusCode?: boolean;
+      timeout?: number;
+    },
+  ) {
+    const response = await this.request.post(this.usersEndpoint, {
+      data: {
+        user,
+      },
+      failOnStatusCode: options?.failOnStatusCode,
+      timeout: options?.timeout,
+    });
+
+    return response;
+  }
+}
